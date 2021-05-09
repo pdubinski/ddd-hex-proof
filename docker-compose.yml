@@ -1,0 +1,42 @@
+version: '3.5'
+services:
+  php:
+    container_name: proof_php_1
+    build: docker/php-fpm
+    volumes:
+      - .:/var/www:cached
+    links:
+      - db
+    environment:
+      TZ: Europe/Warsaw
+
+  nginx:
+    container_name: proof_nginx_1
+    build: docker/nginx
+    ports:
+      - '8282:80'
+    links:
+      - php
+    volumes:
+      - ./docker/logs/nginx/:/var/log/nginx:cached
+    environment:
+      TZ: Europe/Warsaw
+
+  db:
+    build: docker/mysql
+    container_name: proof_db_1
+    command: mysqld --sql_mode=""
+    ports:
+      - "3309:3306"
+    environment:
+      TZ: Europe/Warsaw
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ddd-hex-proof
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    volumes:
+      - proof-db-volume:/var/lib/mysql
+
+volumes:
+  proof-db-volume:
+    driver: local

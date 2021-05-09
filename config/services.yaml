@@ -27,5 +27,30 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    prooph_event_store.pdo_mysql_event_store:
+        class: Prooph\EventStore\Pdo\MySqlEventStore
+        arguments:
+            - '@prooph_event_store.message_factory'
+            - '@prooph_event_store.connection.doctrine_pdo_connection'
+            - '@prooph_event_store.mysql.single_stream_strategy'
+
+    prooph_event_store.mysql.single_stream_strategy:
+        class: Prooph\EventStore\Pdo\PersistenceStrategy\MySqlSingleStreamStrategy
+
+    Prooph\EventSourcing\EventStoreIntegration\AggregateTranslator: ~
+
+    App\Wallet\Infrastructure\Persistence\Repository\WalletRepository:
+        arguments:
+            - '@prooph_event_store.pdo_mysql_event_store'
+
+    prooph_event_store.connection.doctrine_pdo_connection:
+        class: PDO
+        factory: [ '@doctrine.dbal.default_connection', getWrappedConnection ]
+
+    _instanceof:
+        App\Wallet\Infrastructure\CQRS\CommandHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+        App\Wallet\Infrastructure\CQRS\QueryHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
