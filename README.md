@@ -3,14 +3,15 @@ Very simple wallet (one currency = one wallet) implementation using Symfony, DDD
 just command line scripts testing proof of concept.
 
 ### What works:
-* cqrs (based on Symfony messenger)
+* CQRS (based on Symfony messenger)
 * event store (prooph)
 * one aggregate with one entity
 * assertions
 * three commands (create wallet, deposit, withdraw)
 
 ### What should be done next:
-* more unit tests
+* rest api endpoints
+* more tests
 * snapshots
 * currency and owner id as value objects
 * more assertions
@@ -32,8 +33,12 @@ php bin/console app:demo:2
 ```
 
 ### Unit tests:
+```
 vendor/bin/phpunit tests/Unit
+```
 
 ### Code analysis:
+```
 vendor/bin/phpcs src
 vendor/bin/psalm src
+```
