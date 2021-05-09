@@ -20,7 +20,6 @@ just command line scripts testing proof of concept.
 ### Run:
 ```
 composer install --ignore-platform-reqs
-cd docker
 docker-compose up
 docker exec -it proof_php_1 /bin/bash
 php bin/console doctrine:migrations:migrate
