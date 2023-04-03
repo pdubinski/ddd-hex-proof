@@ -10,7 +10,7 @@ interface MoneyInterface
     public function getAmount(): string;
     public function getCurrency(): string;
     public function add(MoneyInterface ...$addendsAdapters): MoneyInterface;
-    public function subtract(MoneyInterface ...$subtrahends): MoneyInterface;
+    public function subtract(MoneyInterface ...$subtrahendsAdapters): MoneyInterface;
 
     /**
      * Returns an integer less than, equal to, or greater than zero
