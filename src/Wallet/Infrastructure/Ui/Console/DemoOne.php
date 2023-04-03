@@ -10,15 +10,15 @@ use App\Wallet\Domain\ValueObject\Money;
 use App\Wallet\Domain\ValueObject\WalletId;
 use App\Wallet\Infrastructure\CQRS\CommandBusInterface;
 use App\Wallet\Infrastructure\Persistence\Repository\WalletRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Uid\Uuid;
 
+#[AsCommand(name: 'app:demo:1')]
 class DemoOne extends Command
 {
-    protected static $defaultName = 'app:demo:1';
-
     private CommandBusInterface $commandBus;
     private WalletRepository $walletRepository;
 

@@ -8,15 +8,15 @@ use App\Wallet\Application\Command\WithdrawCommand;
 use App\Wallet\Domain\ValueObject\Money;
 use App\Wallet\Domain\ValueObject\WalletId;
 use App\Wallet\Infrastructure\CQRS\CommandBusInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Uid\Uuid;
 
+#[AsCommand(name: 'app:demo:2')]
 class DemoTwo extends Command
 {
-    protected static $defaultName = 'app:demo:2';
-
     private CommandBusInterface $commandBus;
 
     public function __construct(CommandBusInterface $commandBus)

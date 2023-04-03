@@ -45,7 +45,7 @@ services:
 
     prooph_event_store.connection.doctrine_pdo_connection:
         class: PDO
-        factory: [ '@doctrine.dbal.default_connection', getWrappedConnection ]
+        factory: [ '@doctrine.dbal.default_connection', getNativeConnection ]
 
     _instanceof:
         App\Wallet\Infrastructure\CQRS\CommandHandlerInterface:
