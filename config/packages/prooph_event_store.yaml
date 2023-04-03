@@ -2,9 +2,3 @@ prooph_event_store:
     stores:
         default:
             event_store: 'prooph_event_store.pdo_mysql_event_store'
-            repositories:
-                App\Wallet\Domain\Wallet:
-                    repository_class: App\Wallet\Infrastructure\Persistence\Repository\WalletRepository
-                    aggregate_type: App\Wallet\Domain\Wallet
-                    aggregate_translator: Prooph\EventSourcing\EventStoreIntegration\AggregateTranslator
-                    stream_name: 'wallet_stream'

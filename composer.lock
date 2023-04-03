@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "427fea65105dff702dfb9eee12fe4414",
+    "content-hash": "8c6529b80769191019895c3fdad55023",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1889,43 +1889,39 @@
         },
         {
             "name": "prooph/event-store-symfony-bundle",
-            "version": "v0.8.0",
+            "version": "v0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prooph/event-store-symfony-bundle.git",
-                "reference": "70b6e6d79615ceac382125bff3d2e7c6068d9a58"
+                "reference": "67ac599d69ee50ba2fc2e32668743b335f76f013"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/prooph/event-store-symfony-bundle/zipball/70b6e6d79615ceac382125bff3d2e7c6068d9a58",
-                "reference": "70b6e6d79615ceac382125bff3d2e7c6068d9a58",
+                "url": "https://api.github.com/repos/prooph/event-store-symfony-bundle/zipball/67ac599d69ee50ba2fc2e32668743b335f76f013",
+                "reference": "67ac599d69ee50ba2fc2e32668743b335f76f013",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-pdo": "*",
-                "php": "^7.1",
+                "php": "^7.4|^8.0",
                 "prooph/event-store": "^7.0",
                 "symfony/config": "^3.4 || ^4.4 || ^5.0",
                 "symfony/dependency-injection": "^3.4 || ^4.4 || ^5.0",
                 "symfony/framework-bundle": "^3.4 || ^4.4 || ^5.0",
-                "symfony/http-kernel": "^3.4 || ^4.4 || ^5.0"
+                "symfony/http-kernel": "^3.4 || ^4.4 || ^5.0",
+                "symfony/messenger": "^4.2 || ^4.4 || ^5.0"
             },
             "require-dev": {
                 "bookdown/bookdown": "1.x-dev as 1.0.0",
                 "friendsofphp/php-cs-fixer": "^2.8.1",
                 "matthiasnoback/symfony-dependency-injection-test": "^3.1 || ^4.1",
                 "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "^7 || ^8",
+                "phpunit/phpunit": "^8 || ^9",
                 "prooph/bookdown-template": "^0.2.3",
-                "prooph/event-sourcing": "^5.0",
-                "prooph/pdo-event-store": "^1.0",
-                "prooph/php-cs-fixer-config": "^0.2.1",
-                "prooph/snapshot-store": "^1.0",
+                "prooph/pdo-event-store": "^1.12",
+                "prooph/php-cs-fixer-config": "^0.4",
                 "symfony/yaml": "^3.4 || ^4.4 || ^5.0"
-            },
-            "suggest": {
-                "prooph/event-store-bus-bridge": "To Marry CQRS (ProophSerivceBus) with Event Sourcing"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1975,7 +1971,12 @@
                 "prooph",
                 "symfony"
             ],
-            "time": "2019-12-18T11:22:56+00:00"
+            "support": {
+                "docs": "http://getprooph.org/",
+                "issues": "https://github.com/prooph/event-store-symfony-bundle/issues",
+                "source": "https://github.com/prooph/event-store-symfony-bundle"
+            },
+            "time": "2021-04-21T12:22:21+00:00"
         },
         {
             "name": "prooph/pdo-event-store",
@@ -6836,7 +6837,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
