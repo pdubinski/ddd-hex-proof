@@ -8,7 +8,7 @@ RUN apt-get install -y curl git sudo \
 #RUN apt-get install zip unzip
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php --version=1.10.17 \
+    && php composer-setup.php \
     && mv composer.phar /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer
 
