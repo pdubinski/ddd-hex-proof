@@ -1,5 +1,5 @@
 ### Description:
-Very simple wallet (one currency = one wallet) implementation using Symfony, DDD, hexagonal architecture, prooph. No rest api yet,
+Very simple wallet implementation using PHP8.2, Symfony, DDD, hexagonal architecture, prooph. No rest api yet,
 just command line scripts testing proof of concept.
 
 ### What works:
@@ -8,6 +8,7 @@ just command line scripts testing proof of concept.
 * one aggregate with one entity
 * assertions
 * three commands (create wallet, deposit, withdraw)
+* multiple currencies supported
 
 ### What should be done next:
 * rest api endpoints
