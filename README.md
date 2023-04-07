@@ -1,5 +1,5 @@
 ### Description:
-Very simple wallet implementation using PHP8.2, Symfony, DDD, hexagonal architecture, prooph. No rest api yet,
+Very simple wallet implementation using PHP 8.2, Symfony, DDD, hexagonal architecture, prooph. No rest api yet,
 just command line scripts testing proof of concept.
 
 ### What works:
