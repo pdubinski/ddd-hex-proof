@@ -3,25 +3,28 @@ declare(strict_types=1);
 
 namespace App\Wallet\Domain\Entity;
 
+use App\Wallet\Domain\Exception\DepositDoesNotExist;
+use App\Wallet\Domain\Exception\DepositWithThisCurrencyDoesNotExist;
 use App\Wallet\Domain\Exception\NotEnoughFundsForWithdrawalException;
-use App\Wallet\Domain\Exception\OperationCurrencyDiffersFromWalletCurrencyException;
 use App\Wallet\Domain\ValueObject\MoneyInterface;
 
 class WalletAssertion
 {
-    public function assertEnoughFundsForWithdrawal(MoneyInterface $currentBalance, MoneyInterface $money): self
+    public function assertEnoughFundsForWithdrawal(WalletEntity $wallet, MoneyInterface $money): self
     {
-        if ($currentBalance->compare($money) < 0) {
+        $deposit = $wallet->getDeposit($money->getCurrency());
+
+        if ($deposit->getBalance()->compare($money) < 0) {
             throw new NotEnoughFundsForWithdrawalException();
         }
 
         return $this;
     }
 
-    public function assertSameCurrencyForOperation(MoneyInterface $currentBalance, MoneyInterface $money): self
+    public function assertDepositExists(WalletEntity $wallet, MoneyInterface $money): self
     {
-        if ($currentBalance->getCurrency() !== $money->getCurrency()) {
-            throw new OperationCurrencyDiffersFromWalletCurrencyException();
+        if (!$wallet->hasDeposit($money->getCurrency())) {
+            throw DepositDoesNotExist::forCurrency($money->getCurrency(), $wallet->getId());
         }
 
         return $this;

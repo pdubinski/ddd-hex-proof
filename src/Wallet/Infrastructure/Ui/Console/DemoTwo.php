@@ -35,8 +35,7 @@ class DemoTwo extends Command
         $this->commandBus->dispatch(
             new CreateWalletCommand(
                 $walletId,
-                Uuid::v6()->toBase58(),
-                'DOGE'
+                Uuid::v6()->toBase58()
             )
         );
 

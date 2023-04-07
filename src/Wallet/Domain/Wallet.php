@@ -20,12 +20,11 @@ class Wallet extends AggregateRoot
     private WalletId $id;
     private WalletEntity $walletEntity;
 
-    public static function createNew(string $id, string $ownerId, string $currency): self
+    public static function createNew(string $id, string $ownerId): self
     {
         $wallet = new self();
         $wallet->recordThat(
             WalletCreatedEvent::occur($id, [
-                'currency' => $currency,
                 'ownerId' => $ownerId,
             ])
         );
@@ -45,9 +44,7 @@ class Wallet extends AggregateRoot
 
             $this->walletEntity = new WalletEntity(
                 WalletId::fromString($event->aggregateId()),
-                $event->ownerId(),
-                Money::create(static::INITIAL_BALANCE, $event->currency()),
-                $event->currency()
+                $event->ownerId()
             );
         }
 

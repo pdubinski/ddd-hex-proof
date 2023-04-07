@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Tests\unit\Wallet\Domain\Entity;
 
 use App\Wallet\Domain\Entity\WalletEntity;
+use App\Wallet\Domain\Exception\DepositDoesNotExist;
 use App\Wallet\Domain\Exception\NotEnoughFundsForWithdrawalException;
 use App\Wallet\Domain\Exception\OperationCurrencyDiffersFromWalletCurrencyException;
 use App\Wallet\Domain\ValueObject\Money;
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class WalletEntityTest extends TestCase
 {
-    public function testItIsNotPossibleToWithdrawMoreThanCurrentBalance()
+    public function testItIsNotPossibleToWithdrawMoreThanCurrentBalance(): void
     {
         $this->expectException(NotEnoughFundsForWithdrawalException::class);
 
@@ -19,64 +20,68 @@ class WalletEntityTest extends TestCase
 
         $walletEntity = new WalletEntity(
             WalletId::generate(),
-            'ownerId',
-            Money::create('1000', $currency),
-            $currency
+            'ownerId'
         );
+
+        $originalAmount = Money::create('1', $currency);
+        $walletEntity->deposit($originalAmount);
 
         $amountToWithdraw = Money::create('9999', $currency);
         $walletEntity->withdraw($amountToWithdraw);
     }
 
-    public function testItIsNotPossibleToWithdrawUsingDifferentCurrency()
+    public function testItIsNotPossibleToWithdrawWhenDepositDoesNotExist(): void
     {
-        $this->expectException(OperationCurrencyDiffersFromWalletCurrencyException::class);
+        $this->expectException(DepositDoesNotExist::class);
 
-        $currency = 'DOGE';
         $otherCurrency = 'ETH';
 
         $walletEntity = new WalletEntity(
             WalletId::generate(),
-            'ownerId',
-            Money::create('1000', $currency),
-            $currency
+            'ownerId'
         );
 
         $amountToWithdraw = Money::create('500', $otherCurrency);
         $walletEntity->withdraw($amountToWithdraw);
     }
 
-    public function testSuccessfulWithdrawal()
+    public function testSuccessfulWithdrawal(): void
     {
         $currency = 'DOGE';
 
         $walletEntity = new WalletEntity(
             WalletId::generate(),
-            'ownerId',
-            Money::create('1000', $currency),
-            $currency
+            'ownerId'
         );
+
+        $originalAmount = Money::create('1000', $currency);
+        $walletEntity->deposit($originalAmount);
 
         $amountToWithdraw = Money::create('600', $currency);
         $walletEntity->withdraw($amountToWithdraw);
 
-        $this->assertEquals(400, $walletEntity->getBalance()->getAmount());
+        $this->assertEquals(
+            400,
+            $walletEntity->getDeposit($currency)->getBalance()->getAmount()
+        );
     }
 
-    public function testSuccessfulDeposit()
+    public function testSuccessfulDeposit(): void
     {
         $currency = 'DOGE';
+        $moneyToDeposit = 600;
 
         $walletEntity = new WalletEntity(
             WalletId::generate(),
-            'ownerId',
-            Money::create('0', $currency),
-            $currency
+            'ownerId'
         );
 
-        $amountToDeposit = Money::create('600', $currency);
+        $amountToDeposit = Money::create((string) $moneyToDeposit, $currency);
         $walletEntity->deposit($amountToDeposit);
 
-        $this->assertEquals(600, $walletEntity->getBalance()->getAmount());
+        $this->assertEquals(
+            $moneyToDeposit,
+            $walletEntity->getDeposit($currency)->getBalance()->getAmount()
+        );
     }
 }

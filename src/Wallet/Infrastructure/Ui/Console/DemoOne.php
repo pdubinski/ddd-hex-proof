@@ -39,8 +39,7 @@ class DemoOne extends Command
         $this->commandBus->dispatch(
             new CreateWalletCommand(
                 $walletId,
-                Uuid::v6()->toBase58(),
-                'DOGE'
+                Uuid::v6()->toBase58()
             )
         );
 
@@ -55,12 +54,12 @@ class DemoOne extends Command
 
         $output->writeln('<fg=green>2. 10000 DOGE deposit</>');
 
-        $this->commandBus->dispatch(
-            new WithdrawCommand(
-                $walletId,
-                Money::create('5000', 'DOGE')
-            )
-        );
+        //$this->commandBus->dispatch(
+        //    new WithdrawCommand(
+        //        $walletId,
+        //        Money::create('5000', 'DOGE')
+        //    )
+        //);
 
         $output->writeln('<fg=green>3. 5000 DOGE withdrawn</>');
         $output->writeln('');

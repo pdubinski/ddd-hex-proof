@@ -11,9 +11,4 @@ final class WalletCreatedEvent extends AggregateChanged
     {
         return $this->payload()['ownerId'];
     }
-
-    public function currency(): string
-    {
-        return $this->payload()['currency'];
-    }
 }

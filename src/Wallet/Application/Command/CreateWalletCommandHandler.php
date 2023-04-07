@@ -26,8 +26,7 @@ class CreateWalletCommandHandler implements CommandHandlerInterface
 
         $wallet = Wallet::createNew(
             $command->getId()->toString(),
-            $command->getOwnerId(),
-            $command->getCurrency()
+            $command->getOwnerId()
         );
 
         $this->walletRepository->saveAggregateRoot($wallet);

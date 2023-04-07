@@ -1,28 +1,56 @@
 version: '3.5'
 services:
-  php:
+  proof_php:
     container_name: proof_php_1
     build: docker/php-fpm
     volumes:
       - .:/var/www:cached
     links:
-      - db
+      - proof_db
     environment:
       TZ: Europe/Warsaw
 
-  nginx:
+  proof_php_xdebug:
+    container_name: proof_php_xdebug
+    build: docker/php-fpm-xdebug
+    volumes:
+      - .:/var/www:cached
+    links:
+      - proof_db
+    environment:
+      TZ: Europe/Warsaw
+      PHP_IDE_CONFIG: serverName=localhost
+      COMPOSER_MEMORY_LIMIT: -1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  proof_nginx:
     container_name: proof_nginx_1
     build: docker/nginx
     ports:
       - '8282:80'
     links:
-      - php
+      - proof_php
     volumes:
       - ./docker/logs/nginx/:/var/log/nginx:cached
     environment:
       TZ: Europe/Warsaw
 
-  db:
+  proof_nginx_xdebug:
+    container_name: proof_nginx_xdebug
+    build: docker/nginx-xdebug
+    ports:
+      - '8989:80'
+    links:
+      - proof_php_xdebug
+    volumes:
+      - ./docker/logs/nginx/:/var/log/nginx:cached
+    environment:
+      TZ: Europe/Warsaw
+    depends_on:
+      - proof_php_xdebug
+
+  proof_db:
     build: docker/mysql
     container_name: proof_db_1
     command: mysqld --sql_mode=""
@@ -35,8 +63,8 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: user
     volumes:
-      - proof-db-volume:/var/lib/mysql
+      - proof-db-data-volume:/var/lib/mysql
 
 volumes:
-  proof-db-volume:
+  proof-db-data-volume:
     driver: local
