@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 RUN apt-get update
 RUN apt-get install -y curl git sudo \
@@ -18,7 +18,7 @@ RUN ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 RUN "date"
 ENV APPLICATION_ENV=dev-docker
 
-RUN yes | pecl install xdebug-3.2.1 \
+RUN yes | pecl install xdebug-3.3.2 \
     && docker-php-ext-enable xdebug
 
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
